@@ -17,12 +17,20 @@ DATABASE_URL = URL.create(
     database=os.getenv("DB_NAME")
 )
 
-engine = create_engine(DATABASE_URL)
+# Create database engine with SSL
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={
+        "ssl": {}
+    }
+)
 
+# Database session
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
     bind=engine
 )
 
+# Base class for SQLAlchemy models
 Base = declarative_base()
